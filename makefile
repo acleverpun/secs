@@ -11,3 +11,6 @@ watch: clean
 
 lint:
 	scripts/lint.sh
+
+install:
+	scripts/install.sh

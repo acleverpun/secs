@@ -6,6 +6,15 @@ An ECS for LÖVE, built in [moonscript](http://moonscript.org/).
 
 Probably works in native lua, too, but I have not yet tested it.
 
+## Install
+
+Just add as a submodule to your project:
+
+```bash
+git submodule add https://github.com/acleverpun/secs.git vendor/secs
+git submodule update --init --remote --recursive
+```
+
 ## Background
 
 I actually think moonscript looks quite ugly...
@@ -23,15 +32,6 @@ I have made quite a few pull requests, but kept getting mad because I found the 
 After I found [a completely library-breaking bug](https://github.com/lovetoys/lovetoys/issues/60) so bad that I really don't understand how anyone has been using the library at all over the past few years, I decided to make my own ECS.
 In doing so, I stopped using my creative middleclass-proxy solution, but took the mains parts with me into [my own class library](https://github.com/acleverpun/caste).
 Thus this should actually be compatible with middleclass, though to what extent I can no longer say.
-
-## Install
-
-Just add as a submodule to your project:
-
-```bash
-git submodule add https://github.com/acleverpun/secs.git vendor/secs
-git submodule update --init --remote --recursive
-```
 
 ## Build
 

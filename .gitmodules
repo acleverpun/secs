@@ -1,0 +1,3 @@
+[submodule "vendor/caste"]
+	path = vendor/caste
+	url = https://github.com/acleverpun/caste.git
