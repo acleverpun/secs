@@ -2,9 +2,18 @@ Caste = require('vendor/caste/lib/caste')
 
 class Entity extends Caste
 
+	@count: 0
+
 	events: nil
 
 	new: (components) =>
+		-- Assign pseudo-random id
+		@id = (
+			string.format('%x', os.time()) ..
+			string.format('%x', math.floor(math.random() * 100000000)) ..
+			@@count
+		)
+		@@count += 1
 		@components = {}
 		@addMultiple(components)
 

@@ -18,7 +18,6 @@ class System extends Caste
 	add: (...) =>
 		entities = { ... }
 		for entity in *entities
-			if not entity.id then error 'Added entity has no id.'
 			if @entities[entity.id] then error 'Entity already present.'
 			@entities[entity.id] = entity
 			if @events then @events\emit('system.entity.add', entity)
@@ -26,7 +25,6 @@ class System extends Caste
 	remove: (...) =>
 		entities = { ... }
 		for entity in *entities
-			if not entity.id then error 'Added entity has no id.'
 			if not @entities[entity.id] then error 'Entity not present.'
 			@entities[entity.id] = nil
 			if @events then @events\emit('system.entity.remove', entity)

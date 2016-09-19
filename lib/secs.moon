@@ -35,8 +35,6 @@ class Secs extends Caste
 
 	addEntity: (entity) =>
 		entity.events = @events
-		-- TODO: address
-		entity.id = #@entities + 1
 		@entities[entity.id] = entity
 
 		for criteria, system in pairs(@systems)
