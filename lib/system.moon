@@ -18,7 +18,7 @@ class System extends Caste
 	add: (...) =>
 		entities = { ... }
 		for entity in *entities
-			table.insert(entity)
+			table.insert(@entities, entity)
 			if @events then @events\emit('system.entity.add', entity)
 
 	remove: (...) =>

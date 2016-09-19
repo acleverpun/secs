@@ -18,7 +18,9 @@ class EventEmitter extends Caste
 		@on(event, wrapper, this)
 
 	emit: (event, ...) =>
-		for { listener, this } in *@listeners[event]
+		event = @listeners[event]
+		if not event then return
+		for { listener, this } in *event
 			if this then listener(this, ...) else listener(...)
 
 	off: (event, listener) =>
