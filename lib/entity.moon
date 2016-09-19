@@ -29,7 +29,7 @@ class Entity extends Caste
 		-- TODO: Make getter, rather than duplicate
 		@[key] = component
 
-		if isNew and @events then @events\emit('entity.component.add', key)
+		if isNew and @events then @events\emit('entity.component.add', @, key)
 
 	add: (key, component) =>
 		unless component
@@ -51,9 +51,9 @@ class Entity extends Caste
 	remove: (key) =>
 		if not @has(key) then error "Tried removing nonexistent component '#{key}' from entity."
 
-		@componets[key] = nil
+		@components[key] = nil
 		@[key] = nil
-		if @events then @events\emit('entity.component.remove', key)
+		if @events then @events\emit('entity.component.remove', @, key)
 
 	get: (key) => if key then @components[key] else @components
 	has: (key) => not not @get(key)

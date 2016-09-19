@@ -9,8 +9,8 @@ class Secs extends Caste
 		@entities = {}
 		@systems = {}
 
-		if @onComponentAdd then @events\on('entity.component.add', @updateComponent, @)
-		if @onComponentRemove then @events\on('entity.component.remove', @updateComponent, @)
+		@events\on('entity.component.add', @updateComponent, @)
+		@events\on('entity.component.remove', @updateComponent, @)
 
 	addSystem: (system) =>
 		system.active = true
@@ -31,7 +31,7 @@ class Secs extends Caste
 	stopSystem: (system) => @toggleSystem(system, false)
 	toggleSystem: (system, active) =>
 		system = @getSystem(system)
-		system.active = if type(active) == 'nil' then not system.active else active
+		system.active = if active == nil then not system.active else active
 
 	addEntity: (entity) =>
 		entity.events = @events
