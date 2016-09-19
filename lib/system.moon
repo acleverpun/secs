@@ -18,19 +18,29 @@ class System extends Caste
 	add: (...) =>
 		entities = { ... }
 		for entity in *entities
-			if @entities[entity.id] then error 'Entity already present.'
-			@entities[entity.id] = entity
+			table.insert(entity)
 			if @events then @events\emit('system.entity.add', entity)
 
 	remove: (...) =>
 		entities = { ... }
 		for entity in *entities
-			if not @entities[entity.id] then error 'Entity not present.'
-			@entities[entity.id] = nil
-			if @events then @events\emit('system.entity.remove', entity)
+			for e = 1, #@entities
+				ent = @entities[e]
+				if ent == entity or ent.id == entity
+					table.remove(@entities, e)
+					if @events then @events\emit('system.entity.remove', ent)
+					break
 
-	get: (entity) => if entity then @entities[entity] or @entities[entity.id] else @entities
-	has: (entity) => not not @get(entity)
+	get: (id) =>
+		if not id then return @entities
+		for e = 1, #@entities
+			entity = @entities[e]
+			if entity.id  == id then return entity
+
+	has: (entity) =>
+		entity = if type(entity) == 'table' then entity.id else entity
+		return not not @get(entity)
+
 	getCriteria: () => @@criteria
 
 	sync: (...) =>

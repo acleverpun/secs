@@ -17,7 +17,7 @@ class Secs extends Caste
 		system.events = @events
 		@systems[system\getCriteria()] = system
 
-		for id, entity in pairs(@entities)
+		for entity in *@entities
 			if system\matches(entity) then system\add(entity)
 
 		system\init()
@@ -35,7 +35,8 @@ class Secs extends Caste
 
 	addEntity: (entity) =>
 		entity.events = @events
-		@entities[entity.id] = entity
+		table.insert(@entities, entity)
+		@events\emit('secs.entity.add', entity)
 
 		for criteria, system in pairs(@systems)
 			if criteria\matches(entity) then system\add(entity)
@@ -43,8 +44,13 @@ class Secs extends Caste
 		entity\init()
 
 	removeEntity: (entity) =>
-		@entities[entity.id].events = nil
-		@entities[entity.id] = nil
+		for e = 1, #@entities
+			ent = @entities[e]
+			if ent == entity or ent.id == entity
+				ent.events = nil
+				table.remove(@entities, e)
+				@events\emit('secs.entity.remove', ent)
+				break
 
 		for criteria, system in pairs(@systems)
 			if system\has(entity) then system\remove(entity)

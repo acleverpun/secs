@@ -9,8 +9,8 @@ class Entity extends Caste
 	new: (components) =>
 		-- Assign pseudo-random id
 		@id = (
-			string.format('%x', os.time()) ..
-			string.format('%x', math.floor(math.random() * 100000000)) ..
+			string.format('%x', os.time()) .. '|' ..
+			string.format('%x', math.floor(math.random() * 100000000)) .. '|' ..
 			@@count
 		)
 		@@count += 1
