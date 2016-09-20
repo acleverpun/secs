@@ -12,14 +12,12 @@ class System extends Caste
 
 	init: () =>
 		@entities = {}
-		if @onAdd then @events\on('system.entity.add', @onAdd, @)
-		if @onRemove then @events\on('system.entity.remove', @onRemove, @)
 
 	add: (...) =>
 		entities = { ... }
 		for entity in *entities
 			table.insert(@entities, entity)
-			if @events then @events\emit('system.entity.add', entity)
+			if @onAdd then @onAdd(entity)
 
 	remove: (...) =>
 		entities = { ... }
@@ -28,7 +26,7 @@ class System extends Caste
 				ent = @entities[e]
 				if ent == entity or ent.id == entity
 					table.remove(@entities, e)
-					if @events then @events\emit('system.entity.remove', ent)
+					if @onRemove then @onRemove(ent)
 					break
 
 	get: (id) =>
@@ -37,9 +35,12 @@ class System extends Caste
 			entity = @entities[e]
 			if entity.id  == id then return entity
 
-	has: (entity) =>
-		entity = if type(entity) == 'table' then entity.id else entity
-		return not not @get(entity)
+	has: (...) =>
+		entities = { ... }
+		for entity in *entities
+			entity = if type(entity) == 'table' then entity.id else entity
+			if not @get(entity) then return false
+		return true
 
 	getCriteria: () => @@criteria
 

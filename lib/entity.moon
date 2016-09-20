@@ -56,4 +56,8 @@ class Entity extends Caste
 		if @events then @events\emit('entity.component.remove', @, key)
 
 	get: (key) => if key then @components[key] else @components
-	has: (key) => not not @get(key)
+	has: (...) =>
+		keys = { ... }
+		for key in *keys
+			if not @get(key) then return false
+		return true
