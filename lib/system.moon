@@ -7,8 +7,7 @@ class System extends Caste
 	@Criteria: Criteria
 	@criteria: Criteria()
 
-	active: false
-	events: nil
+	active: true
 
 	init: () =>
 		@entities = {}
@@ -52,8 +51,11 @@ class System extends Caste
 			if matches and not exists then @add(entity)
 			if not matches and exists then @remove(entity)
 
-	toggleActive: (...) =>
-		isActive = super(...)
-		if isActive and type(@onEnable) == 'function' then @onEnable()
-		elseif not isActive and type(@onDisable) == 'function' then @onDisable()
-		if type(@onToggle) == 'function' then @onToggle(isActive)
+	start: () => @toggle(true)
+	stop: () => @toggle(false)
+	toggle: (active) =>
+		active = if active != nil then active else not @active
+		@active = active
+		if active and type(@onStart) == 'function' then @onStart()
+		elseif not active and type(@onStop) == 'function' then @onStop()
+		if type(@onToggle) == 'function' then @onToggle(active)

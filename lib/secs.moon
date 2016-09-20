@@ -13,9 +13,8 @@ class Secs extends Caste
 		@events\on('entity.component.remove', @updateComponent, @)
 
 	addSystem: (system) =>
-		system.active = true
-		system.events = @events
 		@systems[system\getCriteria()] = system
+		if system.active then @startSystem(system)
 
 		for entity in *@entities
 			if system\matches(entity) then system\add(entity)
@@ -23,15 +22,14 @@ class Secs extends Caste
 		system\init()
 
 	removeSystem: (system) =>
-		system.events = nil
+		@stopSystem(system)
 		@systems[system\getCriteria()] = nil
 
 	getSystem: (system) => return @systems[system] or @systems[system\getCriteria()]
+
 	startSystem: (system) => @toggleSystem(system, true)
 	stopSystem: (system) => @toggleSystem(system, false)
-	toggleSystem: (system, active) =>
-		system = @getSystem(system)
-		system.active = if active == nil then not system.active else active
+	toggleSystem: (system, active) => @getSystem(system)\toggle(active)
 
 	addEntity: (entity) =>
 		entity.events = @events
