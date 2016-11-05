@@ -20,16 +20,24 @@ class Secs extends Caste
 			if system\matches(entity) then system\add(entity)
 
 		system\init()
+		return @
 
 	removeSystem: (system) =>
 		@stopSystem(system)
 		@systems[system\getCriteria()] = nil
+		return @
 
 	getSystem: (system) => return @systems[system] or @systems[system\getCriteria()]
 
-	startSystem: (system) => @toggleSystem(system, true)
-	stopSystem: (system) => @toggleSystem(system, false)
-	toggleSystem: (system, active) => @getSystem(system)\toggle(active)
+	startSystem: (system) =>
+		@toggleSystem(system, true)
+		return @
+	stopSystem: (system) =>
+		@toggleSystem(system, false)
+		return @
+	toggleSystem: (system, active) =>
+		@getSystem(system)\toggle(active)
+		return @
 
 	addEntity: (entity) =>
 		entity.events = @events
@@ -40,6 +48,7 @@ class Secs extends Caste
 			if criteria\matches(entity) then system\add(entity)
 
 		entity\init()
+		return @
 
 	removeEntity: (entity) =>
 		for e = 1, #@entities
@@ -53,10 +62,13 @@ class Secs extends Caste
 		for criteria, system in pairs(@systems)
 			if system\has(entity) then system\remove(entity)
 
+		return @
+
 	-- Sync entities/systems as components change
 	updateComponent: (entity, component) =>
 		for criteria, system in pairs(@systems)
 			if criteria\involves(component) then system\sync(entity)
+		return @
 
 	update: (dt) =>
 		for criteria, system in pairs(@systems)

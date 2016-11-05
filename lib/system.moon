@@ -9,14 +9,14 @@ class System extends Caste
 
 	active: true
 
-	init: () =>
-		@entities = {}
+	init: () => @entities = {}
 
 	add: (...) =>
 		entities = { ... }
 		for entity in *entities
 			table.insert(@entities, entity)
 			if @onAdd then @onAdd(entity)
+		return @
 
 	remove: (...) =>
 		entities = { ... }
@@ -27,6 +27,7 @@ class System extends Caste
 					table.remove(@entities, e)
 					if @onRemove then @onRemove(ent)
 					break
+		return @
 
 	get: (id) =>
 		if not id then return @entities
@@ -50,6 +51,7 @@ class System extends Caste
 			exists = @has(entity)
 			if matches and not exists then @add(entity)
 			if not matches and exists then @remove(entity)
+		return @
 
 	start: () => @toggle(true)
 	stop: () => @toggle(false)
@@ -59,3 +61,4 @@ class System extends Caste
 		if active and type(@onStart) == 'function' then @onStart()
 		elseif not active and type(@onStop) == 'function' then @onStop()
 		if type(@onToggle) == 'function' then @onToggle(active)
+		return @

@@ -31,6 +31,8 @@ class Entity extends Caste
 
 		if isNew and @events then @events\emit('entity.component.add', @, key)
 
+		return @
+
 	add: (key, component) =>
 		unless component
 			component = key
@@ -39,7 +41,7 @@ class Entity extends Caste
 		if @has(key) then error "Entity already has component '#{key}'."
 		if @[key] then error "Entity already has property '#{key}'."
 
-		@set(key, component)
+		return @set(key, component)
 
 	addMultiple: (components = {}) =>
 		for key, component in pairs(components)
@@ -47,6 +49,7 @@ class Entity extends Caste
 				@add(component)
 			else
 				@add(key, component)
+		return @
 
 	remove: (key) =>
 		if not @has(key) then error "Tried removing nonexistent component '#{key}' from entity."
@@ -54,6 +57,8 @@ class Entity extends Caste
 		@components[key] = nil
 		@[key] = nil
 		if @events then @events\emit('entity.component.remove', @, key)
+
+		return @
 
 	get: (key) => if key then @components[key] else @components
 	has: (...) =>
