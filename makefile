@@ -1,5 +1,8 @@
 all: build
 
+init:
+	scripts/init.sh
+
 clean:
 	scripts/clean.sh
 
@@ -12,5 +15,5 @@ watch: clean
 lint:
 	scripts/lint.sh
 
-install:
-	scripts/install.sh
+link:
+	scripts/link.sh
