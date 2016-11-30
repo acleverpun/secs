@@ -71,10 +71,10 @@ class Secs extends Caste
 
 	update: (dt) =>
 		for criteria, system in pairs(@systems)
-			if not system.update or not system.active then continue
+			if not system.update or not system.active or #system.entities == 0 then continue
 			system\update(dt)
 
 	draw: () =>
 		for criteria, system in pairs(@systems)
-			if not system.draw or not system.active then continue
+			if not system.draw or not system.active or #system.entities == 0 then continue
 			system\draw()
