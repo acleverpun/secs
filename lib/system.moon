@@ -1,6 +1,5 @@
-__dirname = (...)\match('(.-)[^%/%.]+$')
 Caste = require('vendor/caste/lib/caste')
-Criteria = require(__dirname .. 'criteria')
+Criteria = req(..., 'lib.criteria')
 
 class System extends Caste
 

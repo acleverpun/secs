@@ -1,6 +1,5 @@
-__dirname = (...)\match('(.-)[^%/%.]+$')
 Caste = require('vendor/caste/lib/caste')
-EventEmitter = require(__dirname .. 'event-emitter')
+EventEmitter = req(..., 'lib.event-emitter')
 
 class Secs extends Caste
 
